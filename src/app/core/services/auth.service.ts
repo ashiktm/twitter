@@ -8,24 +8,27 @@ import { throwError } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
+  private TOKEN_KEY = 'jwtToken';
   private apiUrl = environment.apiUrl;
   constructor(private http: HttpClient) {}
 
   signUp(data: signUpData) {
     return this.http.post(`${this.apiUrl}/signup`, data);
   }
-  private handleError(error: HttpErrorResponse) {
-    console.log(error);
 
-    let errorMessage = 'An unknown error occurred';
-    if (error.error instanceof ErrorEvent) {
-      // Client-side error
-      errorMessage = `Error: ${error.error.message}`;
-    } else {
-      // Server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    console.error(errorMessage);
-    return throwError(() => new Error(errorMessage));
+  login(data: signUpData) {
+    return this.http.post(`${this.apiUrl}/login`, data);
+  }
+
+  saveToken(token: string): void {
+    sessionStorage.setItem(this.TOKEN_KEY, token); // Use sessionStorage instead of localStorage
+  }
+
+  getToken(): string | null {
+    return sessionStorage.getItem(this.TOKEN_KEY); // Use sessionStorage instead of localStorage
+  }
+
+  removeToken(): void {
+    sessionStorage.removeItem(this.TOKEN_KEY); // Use sessionStorage instead of localStorage
   }
 }
