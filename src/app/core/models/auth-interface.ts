@@ -6,6 +6,11 @@ export interface LoginForm {
   username: any[];
   password: any[];
 }
+export interface SignInForm {
+  email: any[];
+
+  password: any[];
+}
 export interface signUpData {
   email?: string;
   username?: string;
