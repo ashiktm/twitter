@@ -22,19 +22,31 @@ export class SignupComponent implements OnInit {
     public notificationService: NotificationService
   ) {}
   ngOnInit() {}
+
+  onActionSuccess(message: string) {
+    this.notificationService.showSuccess(message);
+  }
+
+  onActionFailure(message: string) {
+    this.notificationService.showFailure(message);
+  }
+
+  get email(): AbstractControl {
+    return this.signup.controls.email;
+  }
+
   submit() {
     console.log(this.signup.controls);
     this.email.errors?.['email'];
     this.authService.signUp(this.signup.value).subscribe({
-      next: (data) => {
+      next: (data: any) => {
         console.log('data', data);
+        this.onActionSuccess(data?.message);
       },
       error: (error) => {
+        this.onActionFailure(error);
         console.log('error', error);
       },
     });
-  }
-  get email(): AbstractControl {
-    return this.signup.controls.email;
   }
 }

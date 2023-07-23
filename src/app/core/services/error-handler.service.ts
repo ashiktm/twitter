@@ -16,7 +16,7 @@ export class ErrorHandlerService {
       errorMessage = `Error: ${error.error.message}`;
     } else {
       // Server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      errorMessage = `Something went wrong please try again later`;
 
       // Handle different HTTP error status codes
       switch (error.status) {
