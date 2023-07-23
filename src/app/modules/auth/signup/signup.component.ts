@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { LoginForm } from 'src/app/core/models/auth-interface';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 const fb = new FormBuilder();
 
@@ -15,13 +17,36 @@ export class SignupComponent implements OnInit {
     password: ['', Validators.required],
     username: ['', Validators.required],
   });
-  constructor() {}
+  constructor(
+    private authService: AuthService,
+    public notificationService: NotificationService
+  ) {}
   ngOnInit() {}
+
+  onActionSuccess(message: string) {
+    this.notificationService.showSuccess(message);
+  }
+
+  onActionFailure(message: string) {
+    this.notificationService.showFailure(message);
+  }
+
+  get email(): AbstractControl {
+    return this.signup.controls.email;
+  }
+
   submit() {
     console.log(this.signup.controls);
     this.email.errors?.['email'];
-  }
-  get email(): AbstractControl {
-    return this.signup.controls.email;
+    this.authService.signUp(this.signup.value).subscribe({
+      next: (data: any) => {
+        console.log('data', data);
+        this.onActionSuccess(data?.message);
+      },
+      error: (error) => {
+        this.onActionFailure(error);
+        console.log('error', error);
+      },
+    });
   }
 }
