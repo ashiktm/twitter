@@ -1,27 +1,4 @@
 <main class="container mx-auto px-4 py-8">
-  <app-blog-card></app-blog-card>
-  <div class="mx-auto max-w-5xl py-6 sm:px-6 lg:px-8">
-    <h2 class="text-3xl font-bold mb-4">Create a Blog</h2>
-    <form>
-      <div class="mb-4">
-        <label for="content" class="block text-gray-700 font-semibold mb-2"
-          >Content</label
-        >
-        <textarea
-          id="content"
-          name="content"
-          rows="6"
-          class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-gray-500 focus:border-gray-500 focus:z-10"
-          placeholder="Write your blog content here"
-          required
-        ></textarea>
-      </div>
-      <button
-        type="submit"
-        class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600"
-      >
-        Publish Blog
-      </button>
-    </form>
-  </div>
+  <app-blog-card *ngFor="let tweet of tweets" [tweet]="tweet"></app-blog-card>
+  <app-create-blog (newTweetEvent)="updateTweet($event)"></app-create-blog>
 </main>

@@ -8,12 +8,12 @@
           alt="User Avatar"
           class="w-8 h-8 rounded-full"
         />
-        <span class="ml-2 font-semibold">John Doe</span>
+        <span class="ml-2 font-semibold"> {{ tweet.user.username }}</span>
       </div>
 
       <div class="px-4 py-3">
         <p class="text-gray-600">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          {{ tweet.content }}
         </p>
       </div>
 

@@ -1,18 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-export type Tweet = {
-  success: boolean;
-  message: string;
-  data: Array<{
-    _id: string;
-    content: string;
-    __v: number;
-    comments: string[];
-    likes: string[];
-  }>;
-  err: {};
-};
+import { CreateTweet, Data, NewTweet, Tweet } from '../models/tweet-type';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -22,5 +12,8 @@ export class TweetService {
 
   getTweet() {
     return this.http.get<Tweet>(`${this.apiUrl}/tweets`);
+  }
+  createTweet(payload: CreateTweet) {
+    return this.http.post<NewTweet>(`${this.apiUrl}/tweet`, payload);
   }
 }

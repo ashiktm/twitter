@@ -7,9 +7,4 @@ import { Component } from '@angular/core';
 })
 export class LandingComponent {
   editableValue: string = 'Editable Text';
-  isEditable: boolean = false;
-
-  toggleEditable(): void {
-    this.isEditable = true;
-  }
 }
