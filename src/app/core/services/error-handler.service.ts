@@ -1,12 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ErrorHandlerService {
-  constructor() {}
+  constructor(private notificationService: NotificationService) {}
 
   handleHttpError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred';
@@ -24,7 +25,7 @@ export class ErrorHandlerService {
           errorMessage = 'Bad Request';
           break;
         case 401:
-          errorMessage = 'Unauthorized';
+          errorMessage = 'Unauthorized Access';
           // Perform additional actions for unauthorized access (e.g., redirect to login page)
           break;
         case 403:
@@ -43,7 +44,7 @@ export class ErrorHandlerService {
         // Add more cases as needed for other status codes
       }
     }
-
+    this.notificationService.showNotification('error', errorMessage);
     // Optionally, log the error or perform additional actions here
     console.error(errorMessage);
 

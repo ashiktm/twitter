@@ -2,15 +2,7 @@
 <app-main class="mx"></app-main> -->
 <div class="min-h-full">
   <app-header></app-header>
-  <div (click)="toggleEditable()">
-    <input
-      type="text"
-      class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-gray-300"
-      [(ngModel)]="editableValue"
-      [disabled]="!isEditable"
-    />
-    <button>Toggle Edit</button>
-  </div>
+
   <app-main></app-main>
   <!-- 
   <header class="bg-white shadow">

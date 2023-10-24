@@ -1,0 +1,41 @@
+<div class="px-4 py-2 bg-gray-50">
+  <div class="flex items-center space-x-2">
+    <img
+      src="assets/dummy.jpg"
+      alt="Commenter Avatar"
+      class="w-6 h-6 rounded-full"
+    />
+    <span class="font-semibold">User1:</span>
+    <p class="text-gray-600">Great post!</p>
+  </div>
+  <div class="flex items-center space-x-2 mt-2">
+    <img
+      src="assets/dummy.jpg"
+      alt="Commenter Avatar"
+      class="w-6 h-6 rounded-full"
+    />
+    <span class="font-semibold">User2:</span>
+    <p class="text-gray-600">Thanks for sharing.</p>
+  </div>
+
+  <form class="flex space-x-2 my-2">
+    <img
+      src="assets/dummy.jpg"
+      alt="Your Avatar"
+      class="w-6 h-6 rounded-full"
+    />
+    <input
+      [formControl]="comment"
+      type="text"
+      class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-gray-300"
+      placeholder="Add a comment..."
+    />
+    <button
+      (click)="onSubmit()"
+      type="submit"
+      class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600"
+    >
+      Post
+    </button>
+  </form>
+</div>
