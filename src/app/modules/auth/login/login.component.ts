@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SignInForm } from 'src/app/core/models/auth-interface';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomDialogServiceService } from 'src/app/core/services/custom-dialog-service.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 
 const fb = new FormBuilder();
@@ -16,17 +17,20 @@ export class LoginComponent {
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
   });
+  @ViewChild('dialogContent')
+  dialogContent!: ElementRef;
   constructor(
     private authService: AuthService,
     public notificationService: NotificationService,
-    private router: Router
+    private router: Router,
+    private customDialogService: CustomDialogServiceService
   ) {}
   onActionSuccess(message: string) {
-    this.notificationService.showSuccess(message);
+    this.notificationService.showNotification('success', message);
   }
 
   onActionFailure(message: string) {
-    this.notificationService.showFailure(message);
+    this.notificationService.showNotification('error', message);
   }
 
   get email(): AbstractControl {
@@ -44,9 +48,15 @@ export class LoginComponent {
       error: (error) => {
         this.onActionFailure(error);
         this.authService.removeToken();
-
-        console.log('error', error);
       },
     });
+  }
+  // some.component.ts
+
+  openReusableDialog() {
+    const content = this.dialogContent.nativeElement;
+
+    // Open the reusable dialog and pass the content
+    this.customDialogService.openDialog(content);
   }
 }

@@ -24,11 +24,11 @@ export class SignupComponent implements OnInit {
   ngOnInit() {}
 
   onActionSuccess(message: string) {
-    this.notificationService.showSuccess(message);
+    this.notificationService.showNotification('success', message);
   }
 
   onActionFailure(message: string) {
-    this.notificationService.showFailure(message);
+    this.notificationService.showNotification('error', message);
   }
 
   get email(): AbstractControl {
