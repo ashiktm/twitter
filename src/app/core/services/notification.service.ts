@@ -1,31 +1,23 @@
 import { Injectable } from '@angular/core';
-
+import { Subject } from 'rxjs';
+export type NotificationType = 'success' | 'error' | 'warning' | 'info';
 @Injectable({
   providedIn: 'root',
 })
 export class NotificationService {
   constructor() {}
-  showNotification: boolean = false;
   isFailure: boolean = false;
   message: string = '';
 
-  showSuccess(message: string) {
-    this.isFailure = false;
-    this.message = message;
-    this.showNotification = true;
-    this.hideNotificationAfterDelay();
-  }
+  private notificationSubject = new Subject<{
+    type: NotificationType;
+    message: string;
+  }>();
 
-  showFailure(message: string) {
-    this.isFailure = true;
-    this.message = message;
-    this.showNotification = true;
-    this.hideNotificationAfterDelay();
+  get notifications() {
+    return this.notificationSubject.asObservable();
   }
-
-  private hideNotificationAfterDelay() {
-    setTimeout(() => {
-      this.showNotification = false;
-    }, 3000);
+  showNotification(type: NotificationType, message: string) {
+    this.notificationSubject.next({ type, message });
   }
 }

@@ -5,8 +5,9 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
+import { DialogComponent } from './dialog/dialog.component';
 @NgModule({
-  declarations: [SignupComponent, LoginComponent],
+  declarations: [SignupComponent, LoginComponent, DialogComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,

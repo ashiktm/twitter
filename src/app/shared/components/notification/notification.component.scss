@@ -1,0 +1,15 @@
+.notification-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+.notification {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  opacity: 1;
+  transition: opacity 0.3s, transform 0.3s;
+}
+/* Define styles for your notification types (success, error, etc.) */
+/* ... */
