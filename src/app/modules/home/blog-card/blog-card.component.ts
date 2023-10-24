@@ -8,4 +8,6 @@ import { Data } from 'src/app/core/models/tweet-type';
 })
 export class BlogCardComponent {
   @Input({ required: true }) tweet!: Data;
+
+  createComment(data: any) {}
 }

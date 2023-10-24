@@ -10,6 +10,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CreateBlogComponent } from './create-blog/create-blog.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from 'src/app/core/interceptors/token.interceptor';
+import { BlogCardComponent } from './blog-card/blog-card.component';
+import { CommentComponent } from './comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { TokenInterceptor } from 'src/app/core/interceptors/token.interceptor';
     HeaderComponent,
     MainComponent,
     CreateBlogComponent,
+    BlogCardComponent,
+    CommentComponent,
   ],
   imports: [
     CommonModule,

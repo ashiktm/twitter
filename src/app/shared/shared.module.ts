@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotificationComponent } from './components/notification/notification.component';
-import { BlogCardComponent } from './components/blog-card/blog-card.component';
 
 @NgModule({
-  declarations: [NotificationComponent, BlogCardComponent],
+  declarations: [NotificationComponent],
   imports: [CommonModule],
-  exports: [NotificationComponent, BlogCardComponent],
+  exports: [NotificationComponent],
 })
 export class SharedModule {}

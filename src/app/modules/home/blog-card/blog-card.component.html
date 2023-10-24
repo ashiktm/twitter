@@ -4,11 +4,11 @@
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
       <div class="flex items-center px-4 py-3 bg-gray-900 text-gray-300">
         <img
-          src="user-avatar.jpg"
+          src="assets/dummy.jpg"
           alt="User Avatar"
           class="w-8 h-8 rounded-full"
         />
-        <span class="ml-2 font-semibold"> {{ tweet.user.username }}</span>
+        <span class="ml-2 font-semibold"> {{ tweet.createdby?.username }}</span>
       </div>
 
       <div class="px-4 py-3">
@@ -55,44 +55,10 @@
         </button>
       </div>
     </div>
-    <div class="px-4 py-2 bg-gray-50">
-      <div class="flex items-center space-x-2">
-        <img
-          src="commenter-avatar-1.jpg"
-          alt="Commenter Avatar"
-          class="w-6 h-6 rounded-full"
-        />
-        <span class="font-semibold">User1:</span>
-        <p class="text-gray-600">Great post!</p>
-      </div>
-      <div class="flex items-center space-x-2 mt-2">
-        <img
-          src="commenter-avatar-2.jpg"
-          alt="Commenter Avatar"
-          class="w-6 h-6 rounded-full"
-        />
-        <span class="font-semibold">User2:</span>
-        <p class="text-gray-600">Thanks for sharing.</p>
-      </div>
-
-      <form class="flex space-x-2 my-2">
-        <img
-          src="current-user-avatar.jpg"
-          alt="Your Avatar"
-          class="w-6 h-6 rounded-full"
-        />
-        <input
-          type="text"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-gray-300"
-          placeholder="Add a comment..."
-        />
-        <button
-          type="submit"
-          class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600"
-        >
-          Post
-        </button>
-      </form>
-    </div>
+    <app-comment
+      [tweetId]="tweet._id"
+      (newCommentEvent)="createComment($event)"
+      class="mx-auto max-w-5xl py-6 sm:px-6 lg:px-8"
+    ></app-comment>
   </div>
 </div>
