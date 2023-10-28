@@ -1,4 +1,7 @@
 <main class="container mx-auto px-4 py-8">
+  <h2 class="mx-auto max-w-5xl text-3xl font-bold mb-4 py-6 sm:px-6 lg:px-8">
+    User Feeds
+  </h2>
   <app-blog-card *ngFor="let tweet of tweets" [tweet]="tweet"></app-blog-card>
   <app-create-blog (newTweetEvent)="updateTweet($event)"></app-create-blog>
 </main>

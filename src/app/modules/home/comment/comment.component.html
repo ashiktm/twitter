@@ -1,22 +1,23 @@
 <div class="px-4 py-2 bg-gray-50">
-  <div class="flex items-center space-x-2">
-    <img
-      src="assets/dummy.jpg"
-      alt="Commenter Avatar"
-      class="w-6 h-6 rounded-full"
-    />
-    <span class="font-semibold">User1:</span>
-    <p class="text-gray-600">Great post!</p>
-  </div>
-  <div class="flex items-center space-x-2 mt-2">
-    <img
-      src="assets/dummy.jpg"
-      alt="Commenter Avatar"
-      class="w-6 h-6 rounded-full"
-    />
-    <span class="font-semibold">User2:</span>
-    <p class="text-gray-600">Thanks for sharing.</p>
-  </div>
+  <ng-container *ngFor="let comment of comments">
+    <div class="flex items-center justify-between px-4 py-2">
+      <div class="flex items-center space-x-2">
+        <img
+          src="assets/dummy.jpg"
+          alt="Commenter Avatar"
+          class="w-6 h-6 rounded-full"
+        />
+        <span class="font-semibold">{{ comment.user?.username }}:</span>
+        <p class="text-gray-600">{{ comment.content }}</p>
+      </div>
+      <div class="flex space-x-2">
+        <button class="text-gray-600 hover:text-gray-800 self-end">Like</button>
+        <button class="text-gray-600 hover:text-gray-800 self-end">
+          Comment
+        </button>
+      </div>
+    </div>
+  </ng-container>
 
   <form class="flex space-x-2 my-2">
     <img

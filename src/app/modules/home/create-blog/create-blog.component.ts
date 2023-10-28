@@ -21,6 +21,7 @@ export class CreateBlogComponent {
       next: (resp) => {
         this.notoficationService.showNotification('success', resp?.message);
         this.newTweetEvent.emit(resp.data);
+        this.content.reset();
       },
       error: (err) => {
         this.notoficationService.showNotification('error', err?.message);

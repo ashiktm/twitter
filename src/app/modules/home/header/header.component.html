@@ -48,6 +48,7 @@
           <div class="relative ml-3">
             <div>
               <button
+                (click)="showPanel()"
                 type="button"
                 class="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                 id="user-menu-button"
@@ -74,6 +75,7 @@
                     To: "transform opacity-0 scale-95"
                 -->
             <div
+              *ngIf="show"
               class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
               role="menu"
               aria-orientation="vertical"

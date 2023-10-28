@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Comment } from 'src/app/core/models/tweet-type';
 import { TweetService } from 'src/app/core/services/tweet.service';
 
 @Component({
@@ -14,6 +15,7 @@ export class CommentComponent {
     onModel: 'Tweet';
   }>();
   @Input() tweetId: string = '';
+  @Input() comments: Comment[] = [];
 
   comment = new FormControl('');
   onSubmit() {
@@ -26,7 +28,10 @@ export class CommentComponent {
         commentable: this.tweetId,
       })
       .subscribe({
-        next: (resp) => {},
+        next: (resp) => {
+          this.comments.push(resp.data);
+          this.comment.reset();
+        },
         error: (err) => {},
       });
   }

@@ -7,6 +7,8 @@ import {
   NewTweet,
   Tweet,
   Comment,
+  NewComment,
+  Like,
 } from '../models/tweet-type';
 
 @Injectable({
@@ -23,6 +25,9 @@ export class TweetService {
     return this.http.post<NewTweet>(`${this.apiUrl}/tweet`, payload);
   }
   createComment(payload: Comment) {
-    return this.http.post<NewTweet>(`${this.apiUrl}/comment`, payload);
+    return this.http.post<NewComment>(`${this.apiUrl}/comment`, payload);
+  }
+  toggleLike(payload: Like) {
+    return this.http.post<NewTweet>(`${this.apiUrl}/likes/toggle`, payload);
   }
 }
