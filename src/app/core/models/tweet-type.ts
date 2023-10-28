@@ -4,7 +4,7 @@ export type Data = {
   createdby: { username: string; id: string };
   __v: number;
   comments: Comment[];
-  likes: string[];
+  likes: [];
 };
 
 export type Tweet = {
@@ -31,16 +31,19 @@ export type CreateTweet = {
 
 export type Comment = {
   content: string;
+  _id?: string;
   commentable: string;
   onModel: 'Tweet' | 'Comment';
+  likes?: [];
   user?: { username: string; id: string };
+  comments?: Comment;
 };
 export type Like = {
   likable: string;
   onModel: 'Tweet' | 'Comment';
   user?: { username: string; id: string };
 };
-enum onModel {
+export enum onModel {
   Tweet = 'Tweet',
   Comment = 'Comment',
 }

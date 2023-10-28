@@ -7,7 +7,7 @@
           alt="User Avatar"
           class="w-8 h-8 rounded-full"
         />
-        <span class="ml-2 font-semibold"> {{ tweet.createdby?.username }}</span>
+        <span class="ml-2 font-semibold"> {{ tweet.createdby.username }}</span>
       </div>
 
       <div class="px-4 py-3">
@@ -18,7 +18,7 @@
 
       <div class="flex justify-between px-4 py-2 bg-gray-100">
         <button
-          (click)="toggleLike()"
+          (click)="toggleLike('Tweet', tweet._id)"
           class="text-gray-600 hover:text-gray-800"
         >
           <svg
@@ -35,7 +35,7 @@
               d="M5 13l4 4L19 7"
             />
           </svg>
-          {{ tweet?.likes?.length ? tweet?.likes?.length : "" }} Like
+          {{ tweet?.likes?.length ? tweet.likes.length : "" }} Like
         </button>
 
         <button class="text-gray-600 hover:text-gray-800">

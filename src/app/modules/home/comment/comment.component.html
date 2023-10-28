@@ -1,5 +1,5 @@
 <div class="px-4 py-2 bg-gray-50">
-  <ng-container *ngFor="let comment of comments">
+  <!-- <ng-container *ngFor="let comment of comments; let i = index">
     <div class="flex items-center justify-between px-4 py-2">
       <div class="flex items-center space-x-2">
         <img
@@ -11,13 +11,140 @@
         <p class="text-gray-600">{{ comment.content }}</p>
       </div>
       <div class="flex space-x-2">
-        <button class="text-gray-600 hover:text-gray-800 self-end">Like</button>
+        <button
+          (click)="toggleLike('Comment', comment._id!, i)"
+          class="text-gray-600 hover:text-gray-800 self-end"
+        >
+          {{ comment?.likes?.length ? comment?.likes?.length : "" }} Like
+        </button>
         <button class="text-gray-600 hover:text-gray-800 self-end">
           Comment
         </button>
       </div>
     </div>
+  </ng-container> -->
+  <ng-container *ngFor="let comment of comments; let i = index">
+    <div class="flex items-center justify-between px-4 py-2">
+      <div class="flex items-center space-x-2">
+        <img
+          src="assets/dummy.jpg"
+          alt="Commenter Avatar"
+          class="w-6 h-6 rounded-full"
+        />
+        <span class="font-semibold">{{ comment.user?.username }}:</span>
+        <p class="text-gray-600">{{ comment.content }}</p>
+      </div>
+      <div class="flex space-x-2">
+        <button
+          (click)="toggleLike('Comment', comment._id!, i)"
+          class="text-gray-600 hover:text-gray-800 self-end"
+        >
+          {{ comment?.likes?.length ? comment?.likes?.length : "" }} Like
+        </button>
+        <button
+          (click)="toggleCommentInput(i)"
+          class="text-gray-600 hover:text-gray-800 self-end"
+        >
+          Comment
+        </button>
+      </div>
+    </div>
+    <!-- Input box for adding a new comment -->
+    <form class="w-full flex space-x-2 my-2 px-4 py-2">
+      <!-- <img
+        src="assets/dummy.jpg"
+        alt="Your Avatar"
+        class="w-6 h-6 rounded-full"
+      /> -->
+      <input
+        type="text"
+        *ngIf="showCommentInput[i]"
+        [formControl]="commenttext"
+        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-gray-300"
+        placeholder="Add a comment..."
+      />
+      <button
+        *ngIf="showCommentInput[i]"
+        (click)="onSubmit(comment._id!, 'Comment')"
+        type="submit"
+        class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600"
+      >
+        Post
+      </button>
+    </form>
+    <!-- Recursive call for nested comments -->
+    <div class="ml-8">
+      <!-- Use the same template for nested comments -->
+      <ng-container
+        *ngTemplateOutlet="
+          commentTemplate;
+          context: { $implicit: comment.comments }
+        "
+      ></ng-container>
+    </div>
   </ng-container>
+
+  <!-- Define the template to be used recursively -->
+  <ng-template #commentTemplate let-comments>
+    <ng-container *ngFor="let comment of comments; let i = index">
+      <div class="flex items-center justify-between px-4 py-2">
+        <div class="flex items-center space-x-2">
+          <img
+            src="assets/dummy.jpg"
+            alt="Commenter Avatar"
+            class="w-6 h-6 rounded-full"
+          />
+          <span class="font-semibold">{{ comment.user?.username }}:</span>
+          <p class="text-gray-600">{{ comment.content }}</p>
+        </div>
+        <div class="flex space-x-2">
+          <button
+            (click)="toggleLike('Comment', comment._id!, i)"
+            class="text-gray-600 hover:text-gray-800 self-end"
+          >
+            {{ comment?.likes?.length ? comment?.likes?.length : "" }} Like
+          </button>
+          <button
+            (click)="toggleCommentInput(i)"
+            class="text-gray-600 hover:text-gray-800 self-end"
+          >
+            Comment
+          </button>
+        </div>
+      </div>
+      <form class="w-full flex space-x-2 my-2 px-4 py-2">
+        <!-- <img
+          src="assets/dummy.jpg"
+          alt="Your Avatar"
+          class="w-6 h-6 rounded-full"
+        /> -->
+        <input
+          type="text"
+          *ngIf="showCommentInput[i]"
+          [formControl]="commenttext"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-gray-300"
+          placeholder="Add a comment..."
+        />
+        <button
+          *ngIf="showCommentInput[i]"
+          (click)="onSubmit(comment._id!, 'Comment')"
+          type="submit"
+          class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600"
+        >
+          Post
+        </button>
+      </form>
+      <!-- Recursively call the template for nested comments -->
+      <div class="ml-8">
+        <ng-container
+          *ngTemplateOutlet="
+            commentTemplate;
+            context: { $implicit: comment.comments }
+          "
+        ></ng-container>
+      </div>
+    </ng-container>
+  </ng-template>
 
   <form class="flex space-x-2 my-2">
     <img
@@ -26,13 +153,13 @@
       class="w-6 h-6 rounded-full"
     />
     <input
-      [formControl]="comment"
+      [formControl]="commenttext"
       type="text"
       class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-gray-300"
       placeholder="Add a comment..."
     />
     <button
-      (click)="onSubmit()"
+      (click)="onSubmit(tweetId, 'Tweet')"
       type="submit"
       class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600"
     >

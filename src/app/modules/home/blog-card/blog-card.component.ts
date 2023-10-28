@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Data } from 'src/app/core/models/tweet-type';
+import { Data, onModel } from 'src/app/core/models/tweet-type';
 import { TweetService } from 'src/app/core/services/tweet.service';
 
 @Component({
@@ -12,12 +12,12 @@ export class BlogCardComponent {
   @Input({ required: true }) tweet!: Data;
 
   createComment(data: any) {}
-  toggleLike() {
+  toggleLike(type: 'Tweet' | 'Comment', id: string) {
     // this.newCommentEvent.emit({ content: this.comment.value, onModel: 'Tweet' })
     this.tweetService
       .toggleLike({
-        onModel: 'Tweet',
-        likable: this.tweet._id,
+        onModel: type,
+        likable: id,
       })
       .subscribe({
         next: (resp) => {

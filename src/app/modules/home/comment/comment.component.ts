@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Comment } from 'src/app/core/models/tweet-type';
+import { Comment, onModel } from 'src/app/core/models/tweet-type';
 import { TweetService } from 'src/app/core/services/tweet.service';
 
 @Component({
@@ -15,24 +15,51 @@ export class CommentComponent {
     onModel: 'Tweet';
   }>();
   @Input() tweetId: string = '';
+
   @Input() comments: Comment[] = [];
 
-  comment = new FormControl('');
-  onSubmit() {
-    if (!this.comment.value) return;
+  commenttext = new FormControl('');
+  showCommentInput: { [key: number]: boolean } = {};
+  onSubmit(id: string, onModel: 'Tweet' | 'Comment') {
+    if (!this.commenttext.value) return;
     // this.newCommentEvent.emit({ content: this.comment.value, onModel: 'Tweet' })
     this.tweetService
       .createComment({
-        content: this.comment.value,
-        onModel: 'Tweet',
-        commentable: this.tweetId,
+        content: this.commenttext.value,
+        onModel: onModel,
+        commentable: id,
       })
       .subscribe({
         next: (resp) => {
           this.comments.push(resp.data);
-          this.comment.reset();
+          this.commenttext.reset();
         },
         error: (err) => {},
       });
+  }
+  toggleLike(type: 'Tweet' | 'Comment', id: string, index: number) {
+    // this.newCommentEvent.emit({ content: this.comment.value, onModel: 'Tweet' })
+    this.tweetService
+      .toggleLike({
+        onModel: type,
+        likable: id,
+      })
+      .subscribe({
+        next: (resp) => {
+          this.comments[index].likes = resp.data.likes;
+          //  ? this.comments = [...this.comments];
+          // this.comments.push(resp.data.likes);
+        },
+        error: (err) => {},
+      });
+  }
+  toggleCommentInput(i: number) {
+    this.showCommentInput[i] = !this.showCommentInput[i];
+    // If you want to hide input boxes for all other comments when opening one, you can uncomment the following lines:
+    Object.keys(this.showCommentInput).forEach((key) => {
+      if (parseInt(key) !== i) {
+        this.showCommentInput[parseInt(key)] = false;
+      }
+    });
   }
 }
