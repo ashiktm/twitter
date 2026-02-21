@@ -12,7 +12,7 @@ export type CommentItem = {
 export type Data = {
   _id: string;
   content: string;
-  createdby: { username: string; id: string; profilePicture?: string };
+  createdby: { username: string; id: string; _id?: string; profilePicture?: string };
   __v: number;
   comments: CommentItem[];
   likes: any[];

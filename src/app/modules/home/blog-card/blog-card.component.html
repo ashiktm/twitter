@@ -1,8 +1,8 @@
 <article
   class="p-4 border-b border-gray-200 hover:bg-gray-50 transition-colors duration-200 cursor-pointer text-[15px] font-sans">
   <div class="flex space-x-3">
-    <!-- Avatar -->
-    <div class="flex-shrink-0">
+    <div class="flex-shrink-0" [routerLink]="['/home/profile', tweet.createdby?._id || tweet.createdby?.id]"
+      (click)="$event.stopPropagation()">
       <img [src]="tweet.createdby?.profilePicture || 'assets/dummy.jpg'" alt="User Avatar"
         class="w-10 h-10 rounded-full cursor-pointer hover:opacity-90 transition-opacity object-cover">
     </div>
@@ -11,9 +11,15 @@
     <div class="flex-1 min-w-0">
       <!-- Header -->
       <div class="flex items-center space-x-1">
-        <span class="font-bold text-gray-900 hover:underline cursor-pointer truncate">{{ tweet.createdby?.username ||
+        <span class="font-bold text-gray-900 hover:underline cursor-pointer truncate"
+          [routerLink]="['/home/profile', tweet.createdby?._id || tweet.createdby?.id]"
+          (click)="$event.stopPropagation()">{{
+          tweet.createdby?.username ||
           'Unknown' }}</span>
-        <span class="text-gray-500 truncate">@{{ tweet.createdby?.username || 'unknown' }}</span>
+        <span class="text-gray-500 truncate cursor-pointer hover:underline"
+          [routerLink]="['/home/profile', tweet.createdby?._id || tweet.createdby?.id]"
+          (click)="$event.stopPropagation()">@{{
+          tweet.createdby?.username || 'unknown' }}</span>
         <span class="text-gray-500">·</span>
         <span class="text-gray-500 hover:underline cursor-pointer">1h</span>
       </div>
@@ -80,12 +86,16 @@
           <div #commentsContainer class="space-y-4 max-h-64 overflow-y-auto pr-2">
             <div *ngFor="let comment of tweet.comments" class="flex items-start space-x-3">
               <img [src]="comment.user?.profilePicture || 'assets/dummy.jpg'" alt="Commenter Avatar"
+                [routerLink]="['/home/profile', comment.user?._id]" (click)="$event.stopPropagation()"
                 class="w-8 h-8 rounded-full cursor-pointer hover:opacity-90 flex-shrink-0 object-cover" />
               <div class="flex-1 min-w-0">
                 <div class="flex items-center space-x-1">
-                  <span class="font-bold text-gray-900 hover:underline cursor-pointer text-[14px] truncate">{{
+                  <span class="font-bold text-gray-900 hover:underline cursor-pointer text-[14px] truncate"
+                    [routerLink]="['/home/profile', comment.user?._id]" (click)="$event.stopPropagation()">{{
                     comment.user?.username || 'Unknown' }}</span>
-                  <span class="text-gray-500 text-[14px] truncate">@{{ comment.user?.username || 'unknown' }}</span>
+                  <span class="text-gray-500 text-[14px] truncate cursor-pointer hover:underline"
+                    [routerLink]="['/home/profile', comment.user?._id]" (click)="$event.stopPropagation()">@{{
+                    comment.user?.username || 'unknown' }}</span>
                 </div>
                 <p class="text-gray-900 text-[14px] mt-0.5 break-words">{{ comment.content }}</p>
               </div>

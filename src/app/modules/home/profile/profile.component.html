@@ -29,7 +29,7 @@
                 </div>
 
                 <!-- Edit Profile Button -->
-                <div class="mt-4" *ngIf="currentUserId === profileId || currentUserId === null">
+                <div class="mt-4" *ngIf="currentUserId && currentUserId === profileId">
                     <button (click)="toggleEdit()"
                         class="px-4 py-1.5 font-bold rounded-full border border-gray-300 hover:bg-gray-100 transition-colors">
                         {{ isEditing ? 'Cancel' : 'Edit profile' }}
