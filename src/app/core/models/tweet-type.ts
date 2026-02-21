@@ -1,10 +1,21 @@
+export type CommentItem = {
+  _id: string;
+  content: string;
+  user: { _id: string; username: string };
+  onModel: 'Tweet' | 'Comment';
+  comments: CommentItem[];
+  likes: any[];
+  commentable: string;
+  __v: number;
+};
+
 export type Data = {
   _id: string;
   content: string;
   createdby: { username: string; id: string };
   __v: number;
-  comments: string[];
-  likes: string[];
+  comments: CommentItem[];
+  likes: any[];
 };
 
 export type Tweet = {

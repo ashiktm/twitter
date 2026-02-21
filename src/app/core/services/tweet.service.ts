@@ -19,6 +19,11 @@ export class TweetService {
   getTweet() {
     return this.http.get<Tweet>(`${this.apiUrl}/tweets`);
   }
+
+  getTweetById(id: string) {
+    return this.http.get<NewTweet>(`${this.apiUrl}/tweet/${id}`);
+  }
+
   createTweet(payload: CreateTweet) {
     return this.http.post<NewTweet>(`${this.apiUrl}/tweet`, payload);
   }

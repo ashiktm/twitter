@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://your-production-api-url.com/api', // Your production API URL here
+  apiUrl: 'https://github.com/ashiktm/twitter.git', // Your production API URL here
 };
