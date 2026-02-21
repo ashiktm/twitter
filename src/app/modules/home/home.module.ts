@@ -12,6 +12,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from 'src/app/core/interceptors/token.interceptor';
 import { BlogCardComponent } from './blog-card/blog-card.component';
 import { CommentComponent } from './comment/comment.component';
+import { ExploreComponent } from './explore/explore.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { CommentComponent } from './comment/comment.component';
     CreateBlogComponent,
     BlogCardComponent,
     CommentComponent,
+    ExploreComponent,
   ],
   imports: [
     CommonModule,
@@ -33,4 +35,4 @@ import { CommentComponent } from './comment/comment.component';
   //   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }, // Register the interceptor
   // ],
 })
-export class HomeModule {}
+export class HomeModule { }

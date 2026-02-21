@@ -12,7 +12,7 @@ export class MainComponent implements OnInit {
   constructor(
     private tweetService: TweetService,
     private notificationService: NotificationService
-  ) {}
+  ) { }
   tweets: Data[] = [];
   ngOnInit(): void {
     this.getAllTweet();

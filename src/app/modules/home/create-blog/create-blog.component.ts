@@ -12,7 +12,7 @@ export class CreateBlogComponent {
   constructor(
     private tweetService: TweetService,
     private notoficationService: NotificationService
-  ) {}
+  ) { }
   @Output() newTweetEvent = new EventEmitter<Data>();
   content = new FormControl('');
   createBlog() {
