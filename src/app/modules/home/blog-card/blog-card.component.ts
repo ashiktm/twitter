@@ -9,6 +9,7 @@ import { TweetService } from 'src/app/core/services/tweet.service';
 })
 export class BlogCardComponent {
   @Input({ required: true }) tweet!: Data;
+  showComments: boolean = false;
 
   constructor(private tweetService: TweetService) { }
 
