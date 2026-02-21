@@ -1,13 +1,11 @@
-<!-- <app-header></app-header>
-<app-main class="mx"></app-main> -->
-<div class="min-h-full">
-  <app-header></app-header>
+<div class="min-h-screen bg-white">
+  <!-- Sidebar -->
+  <div class="hidden sm:block w-64 fixed top-0 h-screen z-20">
+    <app-header></app-header>
+  </div>
 
-  <app-main></app-main>
-  <!-- 
-  <header class="bg-white shadow">
-    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      <h1 class="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
-    </div>
-  </header> -->
+  <!-- Main Content Area -->
+  <div class="sm:ml-64 min-h-screen">
+    <app-main></app-main>
+  </div>
 </div>

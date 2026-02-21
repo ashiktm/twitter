@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000/api', // Your development API URL here
+  apiUrl: 'https://twitterapi-6tp6.onrender.com/api', // Your development API URL here
 };
