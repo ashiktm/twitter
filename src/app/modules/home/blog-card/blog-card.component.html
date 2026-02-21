@@ -3,8 +3,8 @@
   <div class="flex space-x-3">
     <!-- Avatar -->
     <div class="flex-shrink-0">
-      <img src="assets/dummy.jpg" alt="User Avatar"
-        class="w-10 h-10 rounded-full cursor-pointer hover:opacity-90 transition-opacity">
+      <img [src]="tweet.createdby?.profilePicture || 'assets/dummy.jpg'" alt="User Avatar"
+        class="w-10 h-10 rounded-full cursor-pointer hover:opacity-90 transition-opacity object-cover">
     </div>
 
     <!-- Main Content -->
@@ -79,8 +79,8 @@
         <div class="border-t border-gray-100 pt-3" *ngIf="tweet.comments && tweet.comments.length > 0">
           <div #commentsContainer class="space-y-4 max-h-64 overflow-y-auto pr-2">
             <div *ngFor="let comment of tweet.comments" class="flex items-start space-x-3">
-              <img src="assets/dummy.jpg" alt="Commenter Avatar"
-                class="w-8 h-8 rounded-full cursor-pointer hover:opacity-90 flex-shrink-0" />
+              <img [src]="comment.user?.profilePicture || 'assets/dummy.jpg'" alt="Commenter Avatar"
+                class="w-8 h-8 rounded-full cursor-pointer hover:opacity-90 flex-shrink-0 object-cover" />
               <div class="flex-1 min-w-0">
                 <div class="flex items-center space-x-1">
                   <span class="font-bold text-gray-900 hover:underline cursor-pointer text-[14px] truncate">{{

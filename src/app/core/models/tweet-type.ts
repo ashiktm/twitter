@@ -1,7 +1,7 @@
 export type CommentItem = {
   _id: string;
   content: string;
-  user: { _id: string; username: string };
+  user: { _id: string; username: string; profilePicture?: string };
   onModel: 'Tweet' | 'Comment';
   comments: CommentItem[];
   likes: any[];
@@ -12,7 +12,7 @@ export type CommentItem = {
 export type Data = {
   _id: string;
   content: string;
-  createdby: { username: string; id: string };
+  createdby: { username: string; id: string; profilePicture?: string };
   __v: number;
   comments: CommentItem[];
   likes: any[];

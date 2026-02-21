@@ -1,15 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { ProfileService } from 'src/app/core/services/profile.service';
+import { TweetService } from 'src/app/core/services/tweet.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   showLogoutMenu: boolean = false;
+  profileRoute: string = '';
+  currentUser: any = null;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private profileService: ProfileService,
+    private tweetService: TweetService
+  ) { }
+
+  ngOnInit(): void {
+    const user = this.authService.getCurrentUser();
+    const id = user?.id || user?._id || user?.userId;
+    if (id) {
+      this.profileRoute = `/home/profile/${id}`;
+      // Call get profile API on load and update the global BehaviorSubject
+      this.profileService.getProfile(id).subscribe(res => {
+        if (res.success) {
+          this.authService.updateCurrentUserProfile(res.data);
+        }
+      });
+    }
+
+    // Subscribe to the global profile to get the avatar
+    this.authService.currentUserProfile$.subscribe(profile => {
+      if (profile) {
+        this.currentUser = profile;
+        if (!this.currentUser.profilePicture) {
+          this.currentUser.profilePicture = 'assets/dummy.jpg';
+        }
+      }
+    });
+  }
 
   logout() {
     sessionStorage.removeItem('jwtToken');

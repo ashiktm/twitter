@@ -13,6 +13,7 @@ import { TokenInterceptor } from 'src/app/core/interceptors/token.interceptor';
 import { BlogCardComponent } from './blog-card/blog-card.component';
 import { CommentComponent } from './comment/comment.component';
 import { ExploreComponent } from './explore/explore.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ExploreComponent } from './explore/explore.component';
     BlogCardComponent,
     CommentComponent,
     ExploreComponent,
+    ProfileComponent,
   ],
   imports: [
     CommonModule,

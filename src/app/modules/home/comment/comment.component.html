@@ -1,7 +1,8 @@
 <div class="py-2">
   <form class="flex items-center space-x-3">
     <!-- Avatar -->
-    <img src="assets/dummy.jpg" alt="Your Avatar" class="w-8 h-8 rounded-full flex-shrink-0" />
+    <img [src]="currentUserProfile?.profilePicture || 'assets/dummy.jpg'" alt="Your Avatar"
+      class="w-8 h-8 rounded-full flex-shrink-0 object-cover" />
 
     <!-- Input -->
     <div

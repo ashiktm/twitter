@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Data } from 'src/app/core/models/tweet-type';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { TweetService } from 'src/app/core/services/tweet.service';
 @Component({
@@ -8,22 +9,31 @@ import { TweetService } from 'src/app/core/services/tweet.service';
   templateUrl: './create-blog.component.html',
   styleUrls: ['./create-blog.component.scss'],
 })
-export class CreateBlogComponent {
+export class CreateBlogComponent implements OnInit {
+  currentUserProfile: any = null;
+
   constructor(
     private tweetService: TweetService,
-    private notoficationService: NotificationService
+    private notificationService: NotificationService,
+    private authService: AuthService
   ) { }
+
+  ngOnInit(): void {
+    this.authService.currentUserProfile$.subscribe(profile => {
+      this.currentUserProfile = profile;
+    });
+  }
   @Output() newTweetEvent = new EventEmitter<Data>();
   content = new FormControl('');
   createBlog() {
     if (!this.content.value) return;
     this.tweetService.createTweet({ content: this.content.value }).subscribe({
       next: (resp) => {
-        this.notoficationService.showNotification('success', resp?.message);
+        this.notificationService.showNotification('success', resp?.message);
         this.newTweetEvent.emit(resp.data);
       },
       error: (err) => {
-        this.notoficationService.showNotification('error', err?.message);
+        this.notificationService.showNotification('error', err?.message);
       },
     });
   }

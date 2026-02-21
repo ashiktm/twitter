@@ -3,14 +3,21 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { LoginForm, signUpData } from '../models/auth-interface';
 import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private TOKEN_KEY = 'jwtToken';
   private apiUrl = environment.apiUrl;
-  constructor(private http: HttpClient) {}
+
+  public currentUserProfile$ = new BehaviorSubject<any>(null);
+
+  constructor(private http: HttpClient) { }
+
+  updateCurrentUserProfile(profile: any) {
+    this.currentUserProfile$.next(profile);
+  }
 
   signUp(data: signUpData) {
     return this.http.post(`${this.apiUrl}/signup`, data);
@@ -58,10 +65,18 @@ export class AuthService {
   }
 
   private decodeToken(token: string): any {
-    // Replace this with your actual JWT token decoding logic
-    // You can use libraries like 'jwt-decode' or 'jsonwebtoken' to decode the token
-    // For example: return jwt_decode(token);
-    // Here, we use a placeholder function to return an empty object for simplicity
-    return {};
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  getCurrentUser(): any {
+    const token = this.getToken();
+    if (token) {
+      return this.decodeToken(token);
+    }
+    return null;
   }
 }

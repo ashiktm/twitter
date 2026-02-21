@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { TweetService } from 'src/app/core/services/tweet.service';
 import { CommentItem } from 'src/app/core/models/tweet-type';
 
@@ -8,11 +9,17 @@ import { CommentItem } from 'src/app/core/models/tweet-type';
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.scss'],
 })
-export class CommentComponent {
-  constructor(private tweetService: TweetService) {}
+export class CommentComponent implements OnInit {
+  constructor(private tweetService: TweetService, private authService: AuthService) { }
   @Output() newCommentEvent = new EventEmitter<CommentItem>();
   @Input() tweetId: string = '';
-  @Input() currentUser: { _id: string; username: string } | null = null;
+  currentUserProfile: any = null;
+
+  ngOnInit(): void {
+    this.authService.currentUserProfile$.subscribe(profile => {
+      this.currentUserProfile = profile;
+    });
+  }
 
   comment = new FormControl('');
   onSubmit() {
@@ -30,7 +37,7 @@ export class CommentComponent {
           const newComment: CommentItem = {
             _id: resp.data?._id || Date.now().toString(),
             content: commentContent,
-            user: this.currentUser || { _id: '', username: 'User' },
+            user: this.currentUserProfile || { _id: '', username: 'User' },
             onModel: 'Tweet',
             comments: [],
             likes: [],

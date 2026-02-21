@@ -2,7 +2,8 @@
   <div class="flex space-x-3">
     <!-- Avatar -->
     <div class="flex-shrink-0">
-      <img src="assets/dummy.jpg" alt="User Avatar" class="w-10 h-10 rounded-full">
+      <img [src]="currentUserProfile?.profilePicture || 'assets/dummy.jpg'" alt="User Avatar"
+        class="w-10 h-10 rounded-full object-cover">
     </div>
 
     <!-- Input Area -->
