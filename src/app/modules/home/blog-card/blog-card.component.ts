@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { Data, CommentItem } from 'src/app/core/models/tweet-type';
 import { TweetService } from 'src/app/core/services/tweet.service';
 
@@ -10,6 +10,8 @@ import { TweetService } from 'src/app/core/services/tweet.service';
 export class BlogCardComponent {
   @Input({ required: true }) tweet!: Data;
   showComments: boolean = false;
+
+  @ViewChild('commentsContainer') private commentsContainer!: ElementRef;
 
   constructor(private tweetService: TweetService) { }
 
@@ -33,6 +35,16 @@ export class BlogCardComponent {
         // Update the tweet with the latest data from the server
         if (response.data) {
           this.tweet = response.data;
+
+          // Scroll smoothly to the bottom of the comments container after Angular renders the new element
+          setTimeout(() => {
+            if (this.commentsContainer) {
+              this.commentsContainer.nativeElement.scrollTo({
+                top: this.commentsContainer.nativeElement.scrollHeight,
+                behavior: 'smooth'
+              });
+            }
+          }, 100);
         }
       },
       error: (err) => {
