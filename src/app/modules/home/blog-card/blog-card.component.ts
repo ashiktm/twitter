@@ -10,7 +10,20 @@ import { TweetService } from 'src/app/core/services/tweet.service';
 export class BlogCardComponent {
   @Input({ required: true }) tweet!: Data;
 
-  constructor(private tweetService: TweetService) {}
+  constructor(private tweetService: TweetService) { }
+
+  toggleLike(id: string, onModel: 'Tweet' | 'Comment' = 'Tweet') {
+    this.tweetService.toggleLike({ likable: id, onModel }).subscribe({
+      next: (response: any) => {
+        if (response.data) {
+          this.tweet = response.data;
+        }
+      },
+      error: (err) => {
+        console.error('Error toggling like:', err);
+      },
+    });
+  }
 
   createComment(newComment: CommentItem) {
     // Fetch the updated tweet data from the backend

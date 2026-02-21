@@ -14,7 +14,7 @@ import {
 })
 export class TweetService {
   private apiUrl = environment.apiUrl;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getTweet() {
     return this.http.get<Tweet>(`${this.apiUrl}/tweets`);
@@ -29,5 +29,9 @@ export class TweetService {
   }
   createComment(payload: Comment) {
     return this.http.post<NewTweet>(`${this.apiUrl}/comment`, payload);
+  }
+
+  toggleLike(payload: any) {
+    return this.http.post<any>(`${this.apiUrl}/likes/toggle`, payload);
   }
 }

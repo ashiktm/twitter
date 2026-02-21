@@ -43,3 +43,8 @@ enum onModel {
   Tweet = 'Tweet',
   Comment = 'Comment',
 }
+
+export type ToggleLikePayload = {
+  likable: string;
+  onModel: 'Tweet' | 'Comment';
+};
