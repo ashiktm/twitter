@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
 
     isEditing: boolean = false;
     editForm: FormGroup;
+    selectedFile: File | null = null;
 
     loading: boolean = true;
     saving: boolean = false;
@@ -77,6 +78,7 @@ export class ProfileComponent implements OnInit {
 
     toggleEdit() {
         this.isEditing = !this.isEditing;
+        this.selectedFile = null;
         if (this.isEditing && this.profile) {
             this.editForm.patchValue({
                 bio: this.profile.bio || '',
@@ -88,6 +90,7 @@ export class ProfileComponent implements OnInit {
     onImagePicked(event: Event) {
         const file = (event.target as HTMLInputElement).files?.[0];
         if (file) {
+            this.selectedFile = file;
             const reader = new FileReader();
             reader.onload = () => {
                 this.editForm.patchValue({ profilePicture: reader.result as string });
@@ -102,17 +105,21 @@ export class ProfileComponent implements OnInit {
         this.saving = true;
         const formValue = this.editForm.value;
 
-        // Clean string input, convert empty strings to undefined if preferred by backend
-        const updateData: any = {};
-        if (formValue.bio !== null && formValue.bio !== undefined) updateData.bio = formValue.bio;
-        if (formValue.profilePicture !== null && formValue.profilePicture !== undefined) updateData.profilePicture = formValue.profilePicture;
+        const formData = new FormData();
+        if (formValue.bio !== null && formValue.bio !== undefined) {
+            formData.append('bio', formValue.bio);
+        }
+        if (this.selectedFile) {
+            formData.append('profilePicture', this.selectedFile);
+        }
 
-        this.profileService.updateProfile(updateData).subscribe({
+        this.profileService.updateProfile(formData).subscribe({
             next: (resp) => {
                 if (resp.success) {
                     this.profile = resp.data;
                     this.notificationService.showNotification('success', 'Profile updated successfully');
                     this.isEditing = false;
+                    this.selectedFile = null;
                 }
                 this.saving = false;
             },

@@ -28,7 +28,7 @@ export class ProfileService {
         return this.http.get<ProfileResponse>(`${this.apiUrl}/profile/${id}`);
     }
 
-    updateProfile(data: { bio?: string, profilePicture?: string }) {
+    updateProfile(data: FormData) {
         return this.http.put<ProfileResponse>(`${this.apiUrl}/profile`, data);
     }
 }
