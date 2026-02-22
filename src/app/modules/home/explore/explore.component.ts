@@ -59,6 +59,13 @@ export class ExploreComponent implements OnInit {
         this.searchSubject.next(term);
     }
 
+    clearSearch(): void {
+        this.searchTerm = '';
+        this.searchSubject.next('');
+        this.hashtags = [];
+        this.showDropdown = false;
+    }
+
     selectHashtag(tag: string): void {
         this.searchTerm = `#${tag}`;
         this.hashtags = [];

@@ -10,8 +10,17 @@
                 </svg>
             </div>
             <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange($event)"
-                class="block w-full pl-10 pr-3 py-2 border border-transparent rounded-full leading-5 bg-gray-100 text-gray-900 placeholder-gray-500 focus:outline-none focus:bg-white focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors"
+                class="block w-full pl-10 pr-10 py-2 border border-transparent rounded-full leading-5 bg-gray-100 text-gray-900 placeholder-gray-500 focus:outline-none focus:bg-white focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors"
                 placeholder="Search for tags..." />
+
+            <button *ngIf="searchTerm" (click)="clearSearch()"
+                class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none">
+                <div class="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors">
+                    <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </div>
+            </button>
 
             <!-- Hashtag Autocomplete Dropdown -->
             <div *ngIf="showDropdown && hashtags.length > 0"
