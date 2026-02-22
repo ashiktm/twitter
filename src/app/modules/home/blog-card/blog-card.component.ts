@@ -10,6 +10,7 @@ import { TweetService } from 'src/app/core/services/tweet.service';
 export class BlogCardComponent {
   @Input({ required: true }) tweet!: Data;
   showComments: boolean = false;
+  activeReplyId: string | null = null;
 
   @ViewChild('commentsContainer') private commentsContainer!: ElementRef;
 
@@ -36,8 +37,33 @@ export class BlogCardComponent {
         if (response.data) {
           this.tweet = response.data;
 
-          // Scroll smoothly to the bottom of the comments container after Angular renders the new element
+          // Scroll smoothly to the user's newly appended comment
           setTimeout(() => {
+            let latestCommentId: string | null = null;
+            const findComment = (commentsList: any[]) => {
+              for (const c of commentsList) {
+                if (c.content === newComment.content && c.user?.username === newComment.user?.username) {
+                  latestCommentId = c._id;
+                }
+                if (c.comments && c.comments.length > 0) {
+                  findComment(c.comments);
+                }
+              }
+            };
+
+            if (this.tweet.comments) {
+              findComment(this.tweet.comments);
+            }
+
+            if (latestCommentId) {
+              const element = document.getElementById('comment-' + latestCommentId);
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                return;
+              }
+            }
+
+            // Fallback to scrolling container
             if (this.commentsContainer) {
               this.commentsContainer.nativeElement.scrollTo({
                 top: this.commentsContainer.nativeElement.scrollHeight,

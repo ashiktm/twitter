@@ -7,6 +7,7 @@ export interface UserProfile {
     email: string;
     bio?: string;
     profilePicture?: string;
+    createdAt?: string;
 }
 
 export interface ProfileResponse {

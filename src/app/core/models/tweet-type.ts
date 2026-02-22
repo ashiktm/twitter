@@ -7,6 +7,7 @@ export type CommentItem = {
   likes: any[];
   commentable: string;
   __v: number;
+  createdAt?: string;
 };
 
 export type Data = {
@@ -16,6 +17,7 @@ export type Data = {
   __v: number;
   comments: CommentItem[];
   likes: any[];
+  createdAt?: string;
 };
 
 export type Tweet = {

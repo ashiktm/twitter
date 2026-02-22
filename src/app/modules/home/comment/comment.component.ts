@@ -13,6 +13,7 @@ export class CommentComponent implements OnInit {
   constructor(private tweetService: TweetService, private authService: AuthService) { }
   @Output() newCommentEvent = new EventEmitter<CommentItem>();
   @Input() tweetId: string = '';
+  @Input() onModel: 'Tweet' | 'Comment' = 'Tweet';
   currentUserProfile: any = null;
 
   ngOnInit(): void {
@@ -28,7 +29,7 @@ export class CommentComponent implements OnInit {
     this.tweetService
       .createComment({
         content: commentContent,
-        onModel: 'Tweet',
+        onModel: this.onModel,
         commentable: this.tweetId,
       })
       .subscribe({
@@ -38,11 +39,12 @@ export class CommentComponent implements OnInit {
             _id: resp.data?._id || Date.now().toString(),
             content: commentContent,
             user: this.currentUserProfile || { _id: '', username: 'User' },
-            onModel: 'Tweet',
+            onModel: this.onModel,
             comments: [],
             likes: [],
             commentable: this.tweetId,
             __v: 0,
+            createdAt: new Date().toISOString()
           };
           this.newCommentEvent.emit(newComment);
           this.comment.reset();
