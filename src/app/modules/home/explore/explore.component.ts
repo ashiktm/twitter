@@ -15,6 +15,9 @@ export class ExploreComponent implements OnInit {
     searchTerm: string = '';
     searchSubject: Subject<string> = new Subject<string>();
 
+    hashtags: any[] = [];
+    showDropdown: boolean = false;
+
     constructor(
         private tweetService: TweetService,
         private notificationService: NotificationService
@@ -31,14 +34,36 @@ export class ExploreComponent implements OnInit {
         ).subscribe((term) => {
             if (term.trim() === '') {
                 this.getAllTweet();
+                this.hashtags = [];
+                this.showDropdown = false;
             } else {
-                this.searchTweets(term);
+                const cleanTerm = term.replace('#', '');
+                this.tweetService.searchHashtags(cleanTerm).subscribe({
+                    next: (resp) => {
+                        if (resp.success) {
+                            this.hashtags = resp.data;
+                            this.showDropdown = this.hashtags.length > 0;
+                        }
+                    },
+                    error: () => {
+                        this.hashtags = [];
+                        this.showDropdown = false;
+                    }
+                });
             }
         });
     }
 
     onSearchChange(event: any): void {
-        this.searchSubject.next(event.target.value);
+        const term = event.target.value;
+        this.searchSubject.next(term);
+    }
+
+    selectHashtag(tag: string): void {
+        this.searchTerm = `#${tag}`;
+        this.hashtags = [];
+        this.showDropdown = false;
+        this.searchTweets(tag);
     }
 
     getAllTweet(): void {
@@ -54,6 +79,7 @@ export class ExploreComponent implements OnInit {
     }
 
     searchTweets(tag: string): void {
+        this.showDropdown = false;
         const cleanTag = tag.replace('#', '');
         this.tweetService.getTweetsByTag(cleanTag).subscribe({
             next: (resp) => {

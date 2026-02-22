@@ -12,6 +12,28 @@
             <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange($event)"
                 class="block w-full pl-10 pr-3 py-2 border border-transparent rounded-full leading-5 bg-gray-100 text-gray-900 placeholder-gray-500 focus:outline-none focus:bg-white focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors"
                 placeholder="Search for tags..." />
+
+            <!-- Hashtag Autocomplete Dropdown -->
+            <div *ngIf="showDropdown && hashtags.length > 0"
+                class="absolute w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden">
+                <ul class="max-h-60 overflow-y-auto">
+                    <li *ngFor="let item of hashtags" (click)="selectHashtag(item.text)"
+                        class="px-4 py-3 hover:bg-gray-100 cursor-pointer flex items-center justify-between border-b border-gray-100 last:border-0">
+                        <div class="flex items-center space-x-2">
+                            <div class="p-2 rounded-full bg-gray-100 text-gray-600">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-sm">#{{ item.text }}</h4>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-500">{{ item.tweets?.length || 0 }} posts</span>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://github.com/ashiktm/twitter.git', // Your production API URL here
+  apiUrl: 'https://twitterapi-6tp6.onrender.com/api', // Your production API URL here
 };

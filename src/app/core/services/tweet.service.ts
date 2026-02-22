@@ -38,4 +38,8 @@ export class TweetService {
   toggleLike(payload: any) {
     return this.http.post<any>(`${this.apiUrl}/likes/toggle`, payload);
   }
+
+  searchHashtags(name: string) {
+    return this.http.get<any>(`${this.apiUrl}/hashtags/search/${name}`);
+  }
 }
