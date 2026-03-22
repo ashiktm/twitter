@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { LoginForm, signUpData } from '../models/auth-interface';
 import { catchError } from 'rxjs/operators';
 import { BehaviorSubject, throwError } from 'rxjs';
+import { IS_PUBLIC_API } from '../interceptors/token.interceptor';
 @Injectable({
   providedIn: 'root',
 })
@@ -20,11 +21,15 @@ export class AuthService {
   }
 
   signUp(data: signUpData) {
-    return this.http.post(`${this.apiUrl}/signup`, data);
+    return this.http.post(`${this.apiUrl}/signup`, data,{ 
+  context: new HttpContext().set(IS_PUBLIC_API, true) 
+});
   }
 
   login(data: signUpData) {
-    return this.http.post(`${this.apiUrl}/login`, data);
+    return this.http.post(`${this.apiUrl}/login`, data,{ 
+  context: new HttpContext().set(IS_PUBLIC_API, true) 
+});
   }
 
   saveToken(token: string): void {
